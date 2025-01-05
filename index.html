@@ -24,6 +24,17 @@
             50% { transform: translateY(10px); }
         }
 
+        @keyframes fadeInFromDark {
+            0% { 
+                opacity: 0;
+                background: rgba(5, 5, 5, 1);
+            }
+            100% { 
+                opacity: 1;
+                background: rgba(5, 5, 5, 0.9);
+            }
+        }
+
         body {
             background-color: #0a0a0a;
             color: #d0d0d0;
@@ -31,7 +42,9 @@
             margin: 0;
             padding: 20px;
             line-height: 1.6;
-            min-height: 150vh;  /* reduced from 200vh */
+            min-height: 200vh;  /* reduced from 250vh */
+            position: relative; /* added */
+            overflow-x: hidden; /* added */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -96,6 +109,10 @@
         }
 
         .container {
+            position: absolute;  /* changed back from fixed */
+            top: 150vh;        /* start below viewport */
+            left: 50%;
+            transform: translateX(-50%);
             width: 100%;
             max-width: 600px;
             background: linear-gradient(to bottom, #0f0505, #050505);
@@ -103,11 +120,10 @@
             padding: 40px 20px;
             animation: neonPulse 4s infinite ease-in-out;
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-            transition-delay: 0.5s;
+            transition: all 2s cubic-bezier(0.4, 0, 0.2, 1); /* increased from 1s */
+            transform-origin: center bottom;
             margin-top: 0;  /* removed margin-top: 50vh */
-            margin: 20vh auto;  /* added vertical margin */
+            margin: 50vh auto;  /* increased from 35vh to push content lower */
             min-height: 60vh;   /* added minimum height */
             display: flex;
             flex-direction: column;
@@ -115,8 +131,9 @@
         }
 
         .scroll-active .container {
+            top: max(0, 50vh - 50%);  /* prevent going above viewport top */
             opacity: 1;
-            transform: translateY(0);
+            transform: translateX(-50%);
         }
 
         .invitation-body {
@@ -127,7 +144,14 @@
             border: 1px solid #ff0000;
             position: relative;
             box-shadow: inset 0 0 20px rgba(255, 0, 0, 0.1);
-            animation: borderGlow 4s infinite ease-in-out;
+            animation: none; /* remove initial animation */
+            opacity: 0;
+        }
+
+        .scroll-active .invitation-body {
+            animation: borderGlow 4s infinite ease-in-out,
+                      fadeInFromDark 2s forwards;
+            animation-delay: 1s; /* start after container appears */
         }
 
         .header {
@@ -182,8 +206,9 @@
             bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
-            color: rgba(255, 0, 0, 0.7);
-            font-size: 24px;
+            color: rgba(255, 255, 255, 0.9);  /* changed from red to white */
+            font-size: 32px;  /* increased from 24px */
+            font-weight: bold;
             opacity: 1;
             transition: opacity 0.5s ease;
             animation: bounce 2s infinite ease-in-out;
@@ -244,6 +269,7 @@
                 <div class="detail-item">
                     <div class="detail-label">УСЛОВИЯ</div>
                     <p>Средства связи, фото и видеосъемки, а также аудиофиксации запрещены в главной зале.</p>
+                    <p>В качестве подарка предпочтителен взнос 1500 – 2000 рублей на организацию.</p>
                 </div>
                 
                 <div class="detail-item">
@@ -258,21 +284,29 @@
         
         </div>
     </div>
-    <div class="scroll-hint">↓</div>
+    <div class="scroll-hint">↓</div>  <!-- changed back to original arrow -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const scrollThreshold = window.innerHeight * 0.2;
+            let lastScrollPosition = 0;
+            const scrollThreshold = window.innerHeight * 0.3;
+            const container = document.querySelector('.container');
             
             function checkScroll() {
-                if (window.scrollY > scrollThreshold) {
+                const currentScroll = window.scrollY;
+                const scrollingDown = currentScroll > lastScrollPosition;
+                const containerRect = container.getBoundingClientRect();
+                
+                if (currentScroll > scrollThreshold && scrollingDown && containerRect.top >= 0) {
                     document.body.classList.add('scroll-active');
-                } else {
+                } else if (currentScroll < scrollThreshold) {
                     document.body.classList.remove('scroll-active');
                 }
+                
+                lastScrollPosition = currentScroll;
             }
 
             window.addEventListener('scroll', checkScroll);
-            checkScroll(); // Check initial scroll position
+            checkScroll();
         });
     </script>
 </body>
