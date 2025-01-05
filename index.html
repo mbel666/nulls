@@ -71,6 +71,7 @@
             transition: transform 1.5s ease-out;
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;  /* prevent background scrolling */
         }
 
         .background-left {
@@ -89,14 +90,23 @@
             .background-left, .background-right {
                 width: 49%;  /* increased for better connection */
                 transform: translateX(0);  /* reset transform */
+                height: 100%;  /* ensure full height coverage */
+                background-attachment: fixed;
+                background-repeat: no-repeat;
+                top: 0;
+                bottom: 0;
             }
 
             .background-left {
                 background-position: 80% center;  /* adjust image position */
+                background-position: left center;
+                background-size: cover;
             }
 
             .background-right {
                 background-position: 20% center;  /* adjust image position */
+                background-position: right center;
+                background-size: cover;
             }
 
             .scroll-active .background-left {
@@ -123,12 +133,16 @@
 
             .scroll-hint {
                 bottom: 120px;            /* move hint much higher */
+                left: 24.5%;  /* adjust for mobile width */
             }
 
             /* Remove any horizontal scrolling */
             body {
                 overflow-x: hidden;
                 width: 100%;
+                height: 100%;  /* ensure proper height containment */
+                position: fixed;  /* prevent body scroll */
+                overflow-y: auto;  /* allow content scroll */
             }
 
             .container {
@@ -320,24 +334,17 @@
 
         .scroll-hint {
             position: fixed;
-            bottom: 160px;  /* moved higher */
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(255, 255, 255, 0.9);  /* changed from red to white */
-            font-size: 32px;  /* increased from 24px */
+            bottom: 160px;
+            left: 25%;  /* position at center of left image */
+            color: rgba(0, 0, 0, 0.9);  /* changed to black */
+            font-size: 32px;
             font-weight: bold;
             opacity: 1;
             transition: opacity 0.5s ease;
             animation: bounce 2s infinite ease-in-out;
             pointer-events: none;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.9),
-                        0 0 40px rgba(255, 255, 255, 0.8),
-                        0 0 60px rgba(255, 255, 255, 0.7),
-                        0 0 80px rgba(255, 255, 255, 0.6);  /* increased glow layers and intensity */
-        }
-
-        .scroll-active .scroll-hint {
-            opacity: 0;
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.6),
+                        0 0 40px rgba(0, 0, 0, 0.4);  /* changed to black glow */
         }
 
         @media (max-width: 600px) {
@@ -359,7 +366,8 @@
             }
 
             .scroll-hint {
-                bottom: 80px;  /* adjusted for mobile */
+                bottom: 80px;
+                left: 20px;  /* adjusted for mobile */
                 font-size: 20px;
             }
         }
