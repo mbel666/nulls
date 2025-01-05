@@ -108,6 +108,30 @@
             }
             
             .container {
+                width: calc(100% - 30px);  /* reduce width */
+                padding: 20px 10px;
+                margin: 40vh auto;
+                box-sizing: border-box;    /* ensure padding is included in width */
+            }
+
+            .invitation-body {
+                width: auto;              /* let it fit container */
+                padding: 15px;
+                margin: 10px 5px;         /* reduced margins */
+                box-sizing: border-box;    /* ensure padding is included in width */
+            }
+
+            .scroll-hint {
+                bottom: 120px;            /* move hint much higher */
+            }
+
+            /* Remove any horizontal scrolling */
+            body {
+                overflow-x: hidden;
+                width: 100%;
+            }
+
+            .container {
                 width: calc(100% - 20px);  /* account for padding */
                 max-width: 100%;
                 padding: 25px 15px;
@@ -274,7 +298,7 @@
 
         .scroll-hint {
             position: fixed;
-            bottom: 40px;
+            bottom: 160px;  /* moved higher */
             left: 50%;
             transform: translateX(-50%);
             color: rgba(255, 255, 255, 0.9);  /* changed from red to white */
@@ -284,6 +308,10 @@
             transition: opacity 0.5s ease;
             animation: bounce 2s infinite ease-in-out;
             pointer-events: none;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.9),
+                        0 0 40px rgba(255, 255, 255, 0.8),
+                        0 0 60px rgba(255, 255, 255, 0.7),
+                        0 0 80px rgba(255, 255, 255, 0.6);  /* increased glow layers and intensity */
         }
 
         .scroll-active .scroll-hint {
@@ -309,7 +337,7 @@
             }
 
             .scroll-hint {
-                bottom: 20px;
+                bottom: 80px;  /* adjusted for mobile */
                 font-size: 20px;
             }
         }
@@ -345,7 +373,7 @@
                 
                 <div class="detail-item">
                     <div class="detail-label">ДРЕСС-КОД</div>
-                    <p>Строго готический сти��ь:<br>
+                    <p>Строго готический стиль:<br>
                     - Темные одежды викторианской эпохи<br>
                     - Элементы средневекового костюма<br>
                     - Мистические аксессуары</p>
