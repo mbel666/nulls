@@ -35,6 +35,17 @@
             }
         }
 
+        @keyframes smokeEffect {
+            0% { opacity: 0.1; transform: translateY(0) scale(1); }
+            50% { opacity: 0.2; transform: translateY(-10px) scale(1.1); }
+            100% { opacity: 0.1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes textReveal {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
         body {
             background-color: #0a0a0a;
             color: #d0d0d0;
@@ -76,27 +87,74 @@
 
         @media (max-width: 768px) {
             .background-left, .background-right {
-                width: 45%;
-                background-size: cover;
-                background-repeat: no-repeat;
+                width: 49%;  /* increased for better connection */
+                transform: translateX(0);  /* reset transform */
             }
 
             .background-left {
-                transform: translateX(-2%);    /* changed from -5% */
-                background-position: right center;
+                background-position: 80% center;  /* adjust image position */
             }
 
             .background-right {
-                transform: translateX(2%);     /* changed from 5% */
-                background-position: left center;
+                background-position: 20% center;  /* adjust image position */
             }
 
             .scroll-active .background-left {
-                transform: translateX(-105%);
+                transform: translateX(-102%);  /* adjusted for clean exit */
             }
 
             .scroll-active .background-right {
-                transform: translateX(105%);
+                transform: translateX(102%);   /* adjusted for clean exit */
+            }
+            
+            .container {
+                width: calc(100% - 20px);  /* account for padding */
+                max-width: 100%;
+                padding: 25px 15px;
+                margin: 40vh auto;
+            }
+
+            .invitation-body {
+                width: calc(100% - 20px);
+                max-width: none;
+                padding: 20px 15px;
+                margin: 15px auto;
+                font-size: 16px;  /* ensure readable size */
+                line-height: 1.5;
+            }
+
+            .detail-item {
+                padding-left: 12px;
+                margin: 12px 0;
+                border-left-width: 1px;
+            }
+
+            .detail-label {
+                font-size: 0.9rem;
+                margin-bottom: 3px;
+            }
+
+            p {
+                margin: 0.8em 0;
+            }
+
+            /* Optimize animations for mobile */
+            .container, .invitation-body {
+                animation-duration: 2s;  /* shorter animations */
+                will-change: transform, opacity;  /* performance hint */
+            }
+
+            /* Improve touch area for links */
+            a {
+                padding: 5px 0;
+                display: inline-block;
+            }
+            
+            /* Add overscroll behavior */
+            body {
+                overscroll-behavior: contain;
+                padding: 10px;
+                min-height: 180vh;  /* reduced height for mobile */
             }
         }
 
@@ -128,6 +186,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
         }
 
         .scroll-active .container {
@@ -146,6 +205,8 @@
             box-shadow: inset 0 0 20px rgba(255, 0, 0, 0.1);
             animation: none; /* remove initial animation */
             opacity: 0;
+            backdrop-filter: blur(5px);
+            letter-spacing: 0.5px;
         }
 
         .scroll-active .invitation-body {
@@ -165,7 +226,8 @@
             text-transform: uppercase;
             letter-spacing: 3px;
             margin: 0;
-            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.7),
+                        0 0 40px rgba(255, 0, 0, 0.4);
         }
 
         .details {
@@ -176,6 +238,15 @@
             margin: 15px 0;
             padding-left: 20px;
             border-left: 2px solid #ff0000;
+            transition: all 0.3s ease;
+            animation: textReveal 1s forwards;
+            animation-delay: calc(var(--item-index) * 0.2s);
+            opacity: 0;
+        }
+
+        .detail-item:hover {
+            transform: translateX(5px);
+            background: rgba(255, 0, 0, 0.03);
         }
 
         .detail-label {
@@ -274,7 +345,7 @@
                 
                 <div class="detail-item">
                     <div class="detail-label">ДРЕСС-КОД</div>
-                    <p>Строго готический стиль:<br>
+                    <p>Строго готический сти��ь:<br>
                     - Темные одежды викторианской эпохи<br>
                     - Элементы средневекового костюма<br>
                     - Мистические аксессуары</p>
@@ -307,6 +378,10 @@
 
             window.addEventListener('scroll', checkScroll);
             checkScroll();
+
+            document.querySelectorAll('.detail-item').forEach((item, index) => {
+                item.style.setProperty('--item-index', index + 1);
+            });
         });
     </script>
 </body>
