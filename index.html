@@ -132,6 +132,19 @@
             }
 
             .container {
+                width: 90%;  /* simplified width calculation */
+                padding: 20px 15px;
+                margin: 40vh auto;
+                box-sizing: border-box;
+            }
+
+            .invitation-body {
+                width: 100%;  /* take full container width */
+                padding: 20px 5px;  /* reduced side padding */
+                margin: 15px 0;     /* removed horizontal margins */
+            }
+
+            .container {
                 width: calc(100% - 20px);  /* account for padding */
                 max-width: 100%;
                 padding: 25px 15px;
@@ -224,7 +237,9 @@
             margin: 20px auto;
             padding: 30px;
             background: rgba(5, 5, 5, 0.9);
-            border: 1px solid #ff0000;
+            border: none;  /* remove full border */
+            border-top: 1px solid #ff0000;    /* add top border */
+            border-bottom: 1px solid #ff0000;  /* add bottom border */
             position: relative;
             box-shadow: inset 0 0 20px rgba(255, 0, 0, 0.1);
             animation: none; /* remove initial animation */
@@ -263,9 +278,16 @@
             padding-left: 20px;
             border-left: 2px solid #ff0000;
             transition: all 0.3s ease;
-            animation: textReveal 1s forwards;
-            animation-delay: calc(var(--item-index) * 0.2s);
+            animation: textReveal 0.8s forwards;
+            animation-delay: calc(min(var(--item-index) * 0.15s, 1s));  /* reduced delay and added max limit */
             opacity: 0;
+        }
+
+        /* Add fallback for animation failures */
+        .scroll-active .detail-item {
+            opacity: 1;  /* ensure items are visible even if animation fails */
+            transition: opacity 1s;
+            transition-delay: 1s;
         }
 
         .detail-item:hover {
