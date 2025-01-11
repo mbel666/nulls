@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Триптих</title>
+    <title>Приглашение</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&display=swap');
 
@@ -78,12 +78,14 @@
             left: 0;
             transform: translateX(0);
             background-image: url('left.webp');
+            clip-path: inset(0 0 0 0); /* Add this */
         }
 
         .background-right {
             right: 0;
             transform: translateX(0);
             background-image: url('right.webp');
+            clip-path: inset(0 0 0 0); /* Add this */
         }
 
         @media (max-width: 768px) {
@@ -92,6 +94,18 @@
                 height: 100vh;
                 position: fixed;
                 background-attachment: initial;
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+
+            .background-left {
+                background-position: right center; /* Change this */
+                clip-path: inset(0 0 0 0); /* Keep this */
+            }
+
+            .background-right {
+                background-position: left center; /* Change this */
+                clip-path: inset(0 0 0 0); /* Keep this */
             }
 
             /* Remove all duplicate and conflicting body styles */
@@ -314,7 +328,8 @@
                 <div class="detail-item">
                     <div class="detail-label">УСЛОВИЯ</div>
                     <p>Средства связи, фото и видеосъемки, а также аудиофиксации запрещены в главной зале.</p>
-                    <p>В качестве подарка предпочтителен взнос 1500 – 2000 рублей на организацию.</p>
+                    <p>В качестве подарка предпочтителен взнос ~2000 рублей на организацию.</p>
+                    <p>Просьба приходить без опозданий.</p>
                 </div>
                 
                 <div class="detail-item">
