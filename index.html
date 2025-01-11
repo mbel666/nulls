@@ -264,17 +264,23 @@
 
         .scroll-hint {
             position: fixed;
-            bottom: 160px;
-            left: 25%;  /* position at center of left image */
-            color: rgba(0, 0, 0, 0.9);  /* changed to black */
-            font-size: 32px;
+            bottom: 40px;          /* reduced from 160px */
+            right: 40px;           /* changed from 25% to fixed pixels */
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 64px;
             font-weight: bold;
             opacity: 1;
             transition: opacity 0.5s ease;
             animation: bounce 2s infinite ease-in-out;
             pointer-events: none;
-            text-shadow: 0 0 20px rgba(0, 0, 0, 0.6),
-                        0 0 40px rgba(0, 0, 0, 0.4);  /* changed to black glow */
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.8),
+                        0 0 40px rgba(0, 0, 0, 0.6);
+            z-index: 100;
+        }
+
+        /* Add this new rule */
+        .scroll-active .scroll-hint {
+            opacity: 0;
         }
 
         @media (max-width: 600px) {
@@ -296,9 +302,9 @@
             }
 
             .scroll-hint {
-                bottom: 80px;
-                left: 20px;  /* adjusted for mobile */
-                font-size: 20px;
+                bottom: 20px;      /* reduced from 80px */
+                right: 20px;       /* kept the same */
+                font-size: 40px;   /* kept the same */
             }
         }
     </style>
@@ -336,6 +342,7 @@
                     <div class="detail-label">ДРЕСС-КОД</div>
                     <p>Строго готический стиль:<br>
                     - Темные одежды викторианской эпохи<br>
+                    - Маска, закрывающая <i> только </i> верхнюю половину лица<br>
                     - Элементы средневекового костюма<br>
                     - Мистические аксессуары</p>
                     <a href="#references">Смотреть примеры →</a>
