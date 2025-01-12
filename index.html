@@ -41,11 +41,6 @@
             100% { opacity: 0.1; transform: translateY(0) scale(1); }
         }
 
-        @keyframes textReveal {
-            from { opacity: 0; transform: translateX(-10px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
         body {
             background-color: #0a0a0a;
             color: #d0d0d0;
@@ -222,22 +217,28 @@
             margin: 15px 0;
             padding-left: 20px;
             border-left: 2px solid #ff0000;
-            transition: all 0.3s ease;
-            animation: textReveal 0.8s forwards;
-            animation-delay: calc(min(var(--item-index) * 0.15s, 1s));  /* reduced delay and added max limit */
             opacity: 0;
+            transform: translateX(-10px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            /* removed hover-related transitions */
         }
 
-        /* Add fallback for animation failures */
+        /* Ensure items become visible when scrolled */
         .scroll-active .detail-item {
-            opacity: 1;  /* ensure items are visible even if animation fails */
-            transition: opacity 1s;
-            transition-delay: 1s;
+            opacity: 1;
+            transform: translateX(0);
+            transition-delay: calc(min(var(--item-index) * 0.15s, 1s));
         }
 
+        /* Remove hover effect */
         .detail-item:hover {
-            transform: translateX(5px);
-            background: rgba(255, 0, 0, 0.03);
+            /* removed all hover styles */
+        }
+
+        /* Ensure text content is always visible once loaded */
+        .detail-item p, 
+        .detail-item .detail-label {
+            opacity: 1 !important;
         }
 
         .detail-label {
